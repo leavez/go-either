@@ -26,6 +26,25 @@ either.MapLeft(e, func(left int) *int {
 // either.Map
 ```
 
+and the Result type, based on `either.Type`
+
+```golang
+r := result.New(123) // result.Type[int]
+r.IsError() // false
+
+if w, err := r.Unwrap(); err != nil {
+  print(w) // 123
+}
+
+result.Map(r, func(t int) string {
+  return "123"
+}) // result.Type[string]
+
+r.MapError(func(err error) error {
+  return fmt.Errorf("faile: %w", err)
+}) // equals r, as MapError will only execute when r is error result
+```
+
 # License
 
 MIT
